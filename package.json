@@ -1,0 +1,32 @@
+{
+  "name": "textlint-rule-for-latex-report",
+  "version": "1.0.0",
+  "keywords": [
+    "textlintrule"
+  ],
+  "main": "lib/index.js",
+  "files": [
+    "lib/",
+    "src/"
+  ],
+  "scripts": {
+    "test": "textlint-scripts test",
+    "build": "textlint-scripts build",
+    "prepublish": "npm run --if-present build",
+    "watch": "textlint-scripts build --watch"
+  },
+  "devDependencies": {
+    "@textlint/types": "^14.2.1",
+    "@types/node": "^20.16.11",
+    "textlint-scripts": "^14.2.1",
+    "textlint-tester": "^14.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "author": "ajshooting",
+  "description": "This rule check miss of latex report",
+  "license": "MIT"
+}
