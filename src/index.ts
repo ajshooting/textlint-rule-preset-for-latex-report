@@ -17,32 +17,34 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 return;
             }
 
-
-
-            // $m$ と \(m\) の混在を検出
-            const mixedMathCount = [...text.matchAll(/\$(.*?)\$/g)].length;
-            const mathParenCount = [...text.matchAll(/\\\((.*?)\\\)/g)].length;
+            // $m$ と \(m\) の混在
+            const mixedMathMatches = [...text.matchAll(/\$(.*?)\$/g)];
+            const mathParenMatches = [...text.matchAll(/\\\((.*?)\\\)/g)];
+            const mixedMathCount = mixedMathMatches.length;
+            const mathParenCount = mathParenMatches.length;
             if (mixedMathCount !== 0 && mathParenCount !== 0) {
-            } else {
                 const isMixedMathFewer = mixedMathCount < mathParenCount;
-                const message = isMixedMathFewer
-                    ? `Prefer \\(...\\) instead of $...$. Found ${mixedMathCount} occurrence(s) of $...$.`
-                    : `Prefer $...$ instead of \\(...\\). Found ${mathParenCount} occurrence(s) of \\(...\\).`;
-
-                const firstOccurrence = isMixedMathFewer
-                    ? text.indexOf('$')
-                    : text.indexOf('\\(');
-
-                report(
-                    node,
-                    new RuleError(message, {
-                        padding: locator.at(firstOccurrence),
-                    })
-                );
+                const targetMatches = isMixedMathFewer
+                    ? mixedMathMatches
+                    : mathParenMatches;
+                const targetSymbol = isMixedMathFewer ? '\\(...\\)' : '$...$';
+                const preferredSymbol = isMixedMathFewer
+                    ? '$...$'
+                    : '\\(...\\)';
+                const message = `Prefer ${preferredSymbol} instead of ${targetSymbol}. Found ${targetMatches.length} occurrence(s) of ${targetSymbol}.`;
+                targetMatches.forEach((match) => {
+                    const index = match.index;
+                    report(
+                        node,
+                        new RuleError(message, {
+                            padding: locator.at(index),
+                        })
+                    );
+                });
             }
 
             // キャプションの完全一致
-            const captionMatches = text.matchAll(/\\caption\{(.*?)\}/g);
+            const captionMatches = text.matchAll(/\\caption\{([\s\S]*?)\}/g);
             const captions = Array.from(captionMatches, (match) =>
                 match[1].trim()
             );
@@ -50,10 +52,17 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 (v, i, a) => a.indexOf(v) !== i
             );
             if (duplicateCaptions.length > 0) {
-                for (const duplicateText of duplicateCaptions) {
-                    const regex = new RegExp(duplicateText, 'g');
-                    const matches = text.matchAll(regex);
-                    for (const match of matches) {
+                for (const duplicateText of new Set(duplicateCaptions)) {
+                    // エスケープ処理で安全に検索
+                    const escapedText = duplicateText.replace(
+                        /[.*+?^${}()|[\]\\]/g,
+                        '\\$&'
+                    );
+                    const regex = new RegExp(
+                        `\\\\caption\\{\\s*${escapedText}\\s*\\}`,
+                        'g'
+                    );
+                    for (const match of text.matchAll(regex)) {
                         const index = match.index ?? 0;
                         const matchRange = [
                             index,
@@ -85,17 +94,6 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                     report(node, ruleError);
                 }
             });
-
-            // default
-            // const matches = text.matchAll(/bugs/g);
-            // for (const match of matches) {
-            //     const index = match.index ?? 0;
-            //     const matchRange = [index, index + match[0].length] as const;
-            //     const ruleError = new RuleError('Found bugs.', {
-            //         padding: locator.range(matchRange),
-            //     });
-            //     report(node, ruleError);
-            // }
         },
     };
 };
