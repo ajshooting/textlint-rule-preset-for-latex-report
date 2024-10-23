@@ -7,20 +7,20 @@ const tester = new TextLintTester();
 tester.run('rule', rule, {
     valid: [
         {
-            text: 'This is a valid document without any issues.',
+            text: '問題のない素晴らしい文章。',
             options: { allows: [] },
         },
         {
-            text: 'Math only uses \\(m\\).',
+            text: '定数\\(m\\)を使用します。',
         },
         {
-            text: 'Math only uses $m$.', 
+            text: '変数$x$をみたら嬉しいです。',
         },
         {
-            text: '\\caption{This is unique}',
+            text: '\\caption{普通のキャプション}',
         },
         {
-            text: '正しい文で像が使われています。',
+            text: 'レンズの像が美しい。',
         },
     ],
     invalid: [
@@ -29,9 +29,8 @@ tester.run('rule', rule, {
             errors: [
                 {
                     message:
-                        'Prefer \\(...\\) instead of $...$. Found 1 occurrence(s) of $...$.',
-                    line: 1,
-                    column: 17,
+                        '\\(...\\) と $...$ が混在しています。\n\\(...\\) : 1\n $...$  : 1',
+                    range: [16, 21],
                 },
             ],
         },
@@ -40,13 +39,11 @@ tester.run('rule', rule, {
             errors: [
                 {
                     message: '重複したキャプション: "Duplicate"',
-                    line: 1,
-                    column: 1,
+                    range: [0, 19],
                 },
                 {
                     message: '重複したキャプション: "Duplicate"',
-                    line: 1,
-                    column: 21,
+                    range: [20, 39],
                 },
             ],
         },

@@ -1,4 +1,5 @@
 // dictionary.ts
+// 実際に自分がレポート書いてて変換ミスだったりしたもの
 export interface DictionaryEntry {
     incorrect: string;
     correct: string;

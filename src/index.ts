@@ -6,6 +6,11 @@ export interface Options {
     allows?: string[];
 }
 
+// 範囲指定！あとついか
+// キャプションとかの空欄検知
+// subsectionとか他のも完全一致検索したい
+// 
+
 const report: TextlintRuleModule<Options> = (context, options = {}) => {
     const { Syntax, RuleError, report, getSource, locator } = context;
     const allows = options.allows ?? [];
@@ -24,55 +29,34 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             const mathParenCount = mathParenMatches.length;
             if (mixedMathCount !== 0 && mathParenCount !== 0) {
                 const isMixedMathFewer = mixedMathCount < mathParenCount;
-                const targetMatches = isMixedMathFewer
-                    ? mixedMathMatches
-                    : mathParenMatches;
-                const targetSymbol = isMixedMathFewer ? '\\(...\\)' : '$...$';
-                const preferredSymbol = isMixedMathFewer
-                    ? '$...$'
-                    : '\\(...\\)';
-                const message = `Prefer ${preferredSymbol} instead of ${targetSymbol}. Found ${targetMatches.length} occurrence(s) of ${targetSymbol}.`;
+                const targetMatches = isMixedMathFewer ? mixedMathMatches : mathParenMatches;
+                const message = `\\(...\\) と $...$ が混在しています。\n\\(...\\) : ${mathParenCount}\n $...$  : ${mathParenCount}`;
                 targetMatches.forEach((match) => {
-                    const index = match.index;
-                    report(
-                        node,
-                        new RuleError(message, {
-                            padding: locator.at(index),
-                        })
-                    );
+                    const index = match.index ?? 0;
+                    const matchRange = [index, index + match[0].length] as const;
+                    const ruleError = new RuleError(message, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
                 });
             }
 
             // キャプションの完全一致
-            const captionMatches = text.matchAll(/\\caption\{([\s\S]*?)\}/g);
-            const captions = Array.from(captionMatches, (match) =>
-                match[1].trim()
-            );
-            const duplicateCaptions = captions.filter(
-                (v, i, a) => a.indexOf(v) !== i
-            );
+            const captionMatches = Array.from(text.matchAll(/\\caption\{([^}]*)\}/g));
+            const captions = captionMatches.map((match) => match[1].trim());
+            const duplicateCaptions = captions.filter((v, i, a) => a.indexOf(v) !== i);
             if (duplicateCaptions.length > 0) {
                 for (const duplicateText of new Set(duplicateCaptions)) {
-                    // エスケープ処理で安全に検索
-                    const escapedText = duplicateText.replace(
-                        /[.*+?^${}()|[\]\\]/g,
-                        '\\$&'
-                    );
-                    const regex = new RegExp(
-                        `\\\\caption\\{\\s*${escapedText}\\s*\\}`,
-                        'g'
-                    );
-                    for (const match of text.matchAll(regex)) {
+                    for (const match of captionMatches) {
+                        const [fullMatch, content] = match;
                         const index = match.index ?? 0;
-                        const matchRange = [
-                            index,
-                            index + match[0].length,
-                        ] as const;
-                        const ruleError = new RuleError(
-                            `重複したキャプション: "${duplicateText}"`,
-                            { padding: locator.range(matchRange) }
-                        );
-                        report(node, ruleError);
+                        if (content.trim() === duplicateText) {
+                            const matchRange = [index, index + fullMatch.length] as const;
+                            const ruleError = new RuleError(`重複したキャプション: "${duplicateText}"`, {
+                                padding: locator.range(matchRange),
+                            });
+                            report(node, ruleError);
+                        }
                     }
                 }
             }
@@ -83,14 +67,10 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 const matches = text.matchAll(regex);
                 for (const match of matches) {
                     const index = match.index ?? 0;
-                    const matchRange = [
-                        index,
-                        index + match[0].length,
-                    ] as const;
-                    const ruleError = new RuleError(
-                        `間違いやすい単語 "${incorrect}" もしかして: "${correct}"`,
-                        { padding: locator.range(matchRange) }
-                    );
+                    const matchRange = [index, index + match[0].length] as const;
+                    const ruleError = new RuleError(`間違いやすい単語 "${incorrect}" もしかして: "${correct}"`, {
+                        padding: locator.range(matchRange),
+                    });
                     report(node, ruleError);
                 }
             });
