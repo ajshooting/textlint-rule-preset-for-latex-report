@@ -29,18 +29,14 @@ tester.run('rule', rule, {
             errors: [
                 {
                     message:
-                        '\\(...\\) と $...$ が混在しています。\n\\(...\\) : 1\n $...$  : 1',
-                    range: [16, 21],
+                        '\\(...\\) と $...$ が混在しています。(1回 / 1回)',
+                    range: [8, 11],
                 },
             ],
         },
         {
             text: '\\caption{Duplicate} \\caption{Duplicate}',
             errors: [
-                {
-                    message: '重複したキャプション: "Duplicate"',
-                    range: [0, 19],
-                },
                 {
                     message: '重複したキャプション: "Duplicate"',
                     range: [20, 39],
@@ -51,7 +47,7 @@ tester.run('rule', rule, {
             text: '間違えた単語が象にあります。',
             errors: [
                 {
-                    message: '間違いやすい単語 "象" もしかして: "像"',
+                    message: '"象" -> "像"?',
                     line: 1,
                     column: 8,
                 },
