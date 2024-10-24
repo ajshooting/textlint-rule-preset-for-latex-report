@@ -90,11 +90,31 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             for (const match of emptyMatches) {
                 const index = match.index ?? 0;
                 const matchRange = [index, index + match[0].length] as const;
-                const ruleError = new RuleError("空欄になっています。", {
+                const ruleError = new RuleError('空欄になっています。', {
                     padding: locator.range(matchRange),
                 });
                 report(node, ruleError);
             }
+
+            // 斜体になっていない可能性が高い文字
+            const variableRegex = /[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー]([a-zA-Z])[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー]/g;
+            const variableMatches = Array.from(text.matchAll(variableRegex));
+            for (const match of variableMatches) {
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[1].length] as const;
+                const ruleError = new RuleError('斜体にしていない可能性が高い文字: ' + match[1], {
+                    padding: locator.range(matchRange),
+                });
+                report(node, ruleError);
+            }
+
+            // 単位チェック
+
+            // 不確かさの有効数字チェック
+
+            // 表の有効数字チェック
+
+            // 
 
             // 辞書
             dictionary.forEach(({ incorrect, correct }) => {
