@@ -97,7 +97,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             }
 
             // 斜体になっていない可能性が高い文字
-            const variableRegex = /[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー]([a-zA-Z])[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー]/g;
+            const variableRegex = /[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,\s]([a-zA-Z])[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,\s]/g;
             const variableMatches = Array.from(text.matchAll(variableRegex));
             for (const match of variableMatches) {
                 const index = match.index ?? 0;
@@ -108,14 +108,51 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 report(node, ruleError);
             }
             // ↑表の一番上のところ斜体にしないがちだからそこも一緒に
+            // フィルターで大文字小文字制御する？でDとか斜体の時あるし..
 
-            // 単位チェック
+            // OAばーとかの立体
 
-            // 不確かさの有効数字チェック
+            // キャプションなしとか
+
+            // 単位チェック(有無、空間、)
+            // これもめんどくさそう、本当に
 
             // 表の有効数字チェック
+            // これめっちゃめんどくさそう！
 
-            // 
+            // \times 10^n とかも考慮する？かっこつきで！
+
+            // 不確かさの有効数字チェック(小数点以下の桁数)
+            const pmRegex = /(\d+)\.?(\d*)\s*(?:\\pm|\\mp)\s*(\d+)\.?(\d*)/g;
+            const pmMatches = Array.from(text.matchAll(pmRegex));
+            for (const match of pmMatches) {
+                const index = match.index ?? 0;
+                // 小数点以下の桁数が一致していない
+                if (match[2].length !== match[4].length) {
+                    const matchRange = [index, index + match[0].length] as const;
+                    const ruleError = new RuleError('小数点以下の桁数が揃っていません。', {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+                // 有効数字とり過ぎ
+                const lastDigit = match[4].replace(/^0+/, '');
+                if ((match[3] == '0' && lastDigit.length > 2) || (match[3] !== '0' && match[4].length > 2)) {
+                    const matchRange = [index, index + match[0].length] as const;
+                    const ruleError = new RuleError('有効数字を取り過ぎているかもしれません :' + lastDigit.length, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+                // 整数部分が大きすぎ
+                if (match[1].length > 2 && match[3].length > 2) {
+                    const matchRange = [index, index + match[0].length] as const;
+                    const ruleError = new RuleError('*10^nという表現を使いましょう', {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+            }
 
             // 辞書
             dictionary.forEach(({ incorrect, correct }) => {
