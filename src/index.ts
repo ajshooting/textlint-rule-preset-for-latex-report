@@ -107,6 +107,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 });
                 report(node, ruleError);
             }
+            // ↑表の一番上のところ斜体にしないがちだからそこも一緒に
 
             // 単位チェック
 
