@@ -49,7 +49,7 @@ tester.run('rule', rule, {
             text: '間違えた単語が象にあります。',
             errors: [
                 {
-                    message: '"象" -> "像"?',
+                    message: '"象" -?> "像"',
                     line: 1,
                     column: 8,
                 },

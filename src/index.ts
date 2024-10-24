@@ -103,7 +103,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 for (const match of matches) {
                     const index = match.index ?? 0;
                     const matchRange = [index, index + match[0].length] as const;
-                    const ruleError = new RuleError(`"${incorrect}" -> "${correct}"?`, {
+                    const ruleError = new RuleError(`"${incorrect}" -?> "${correct}"`, {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);
