@@ -22,14 +22,16 @@ tester.run('rule', rule, {
         {
             text: 'レンズの像が美しい。',
         },
+        {
+            text: 'section{せくしょん}',
+        },
     ],
     invalid: [
         {
             text: '混在する数式: $m$ and \\(n\\).',
             errors: [
                 {
-                    message:
-                        '\\(...\\) と $...$ が混在しています。(1回 / 1回)',
+                    message: '\\(...\\) と $...$ が混在しています。(1回 / 1回)',
                     range: [8, 11],
                 },
             ],
@@ -48,6 +50,16 @@ tester.run('rule', rule, {
             errors: [
                 {
                     message: '"象" -> "像"?',
+                    line: 1,
+                    column: 8,
+                },
+            ],
+        },
+        {
+            text: 'section{}',
+            errors: [
+                {
+                    message: '空欄になっています。',
                     line: 1,
                     column: 8,
                 },

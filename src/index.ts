@@ -40,7 +40,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 }
             }
 
-            // タグ内の完全一致
+            // 任意タグ内の完全一致
             // const captionRegex = /\\(\w*?)\{(.*?)\}/g;
             // const captionMatches = Array.from(fullText.matchAll(captionRegex));
             // const seenCaptions = new Set<string>();
@@ -66,8 +66,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             if (mixedMathCount > 0 && mathParenCount > 0) {
                 const isMixedMathFewer = mixedMathCount <= mathParenCount;
                 const targetMatches = isMixedMathFewer ? mixedMathMatches : mathParenMatches;
-                const message =
-                    `\\(...\\) と $...$ が混在しています。(${mathParenCount}回 / ${mixedMathCount}回)`;
+                const message = `\\(...\\) と $...$ が混在しています。(${mathParenCount}回 / ${mixedMathCount}回)`;
                 targetMatches.forEach((match) => {
                     const index = match.index ?? 0;
                     const matchRange = [index, index + match[0].length] as const;
@@ -83,6 +82,18 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             const text = getSource(node); // Get text
             if (allows.some((allow) => text.includes(allow))) {
                 return;
+            }
+
+            // empty{}
+            const emptyRegex = /\{\}/g;
+            const emptyMatches = Array.from(fullText.matchAll(emptyRegex));
+            for (const match of emptyMatches) {
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[0].length] as const;
+                const ruleError = new RuleError("空欄になっています。", {
+                    padding: locator.range(matchRange),
+                });
+                report(node, ruleError);
             }
 
             // 辞書
