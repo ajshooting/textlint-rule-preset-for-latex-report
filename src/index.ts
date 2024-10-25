@@ -97,11 +97,11 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
             }
 
             // 斜体になっていない可能性が高い文字
-            const variableRegex = /[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,\s]([a-zA-Z])[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,\s]/g;
+            const variableRegex = /[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,]([a-zA-Z])[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龥々ー、。\.,]/g;
             const variableMatches = Array.from(text.matchAll(variableRegex));
             for (const match of variableMatches) {
                 const index = match.index ?? 0;
-                const matchRange = [index, index + match[1].length] as const;
+                const matchRange = [index, index + match[0].length] as const;
                 const ruleError = new RuleError('斜体にしていない可能性が高い文字: ' + match[1], {
                     padding: locator.range(matchRange),
                 });
@@ -116,6 +116,38 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
 
             // 単位チェック(有無、空間、)
             // これもめんどくさそう、本当に
+            // 単位の有無をチェック
+            const noUnitRegex = /\d\}?\s*$/g;
+            const noUnitMatches = Array.from(text.matchAll(noUnitRegex));
+            for (const match of noUnitMatches) {
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[0].length] as const;
+                const ruleError = new RuleError('単位が必要かもしれません', {
+                    padding: locator.range(matchRange),
+                });
+                report(node, ruleError);
+            }
+
+            // 単位との間の空白
+            const unitRegex = /\d\}?\s*(.*?)\s*\\\w*?\{.*?\}\s*$/g;
+            const unitMatches = Array.from(text.matchAll(unitRegex));
+            for (const match of unitMatches) {
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[0].length] as const;
+                const regex = /\\,/;
+                const isMatch = match[1] && match[1].match(regex);
+                if (match[1] == '') {
+                    const ruleError = new RuleError('単位との間には空白を開けましょう', {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                } else if (!isMatch) {
+                    const ruleError = new RuleError('単位の前には空白"\\,"を使用するべきです。', {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+            }
 
             // 表の有効数字チェック
             // これめっちゃめんどくさそう！
@@ -139,7 +171,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 const lastDigit = match[4].replace(/^0+/, '');
                 if ((match[3] == '0' && lastDigit.length > 2) || (match[3] !== '0' && match[4].length > 2)) {
                     const matchRange = [index, index + match[0].length] as const;
-                    const ruleError = new RuleError('有効数字を取り過ぎているかもしれません :' + lastDigit.length, {
+                    const ruleError = new RuleError('有効数字を取り過ぎているかもしれません :' + lastDigit.length + '桁', {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);
@@ -161,7 +193,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 for (const match of matches) {
                     const index = match.index ?? 0;
                     const matchRange = [index, index + match[0].length] as const;
-                    const ruleError = new RuleError(`"${incorrect}" -?> "${correct}"`, {
+                    const ruleError = new RuleError(`"${match[0]}" -?> "${correct}"`, {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);
