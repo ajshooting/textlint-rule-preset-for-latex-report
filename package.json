@@ -9,6 +9,9 @@
     "lib/",
     "src/"
   ],
+  "textlint": {
+    "rules": "./lib/index.js"
+  },
   "scripts": {
     "test": "textlint-scripts test",
     "build": "textlint-scripts build",
@@ -28,5 +31,9 @@
   },
   "author": "ajshooting",
   "description": "This rule check miss of latex report",
-  "license": "MIT"
+  "license": "MIT",
+  "exports": {
+    "./rules/empty-rule": "./lib/rules/empty-rule.js",
+    ".": "./lib/index.js"
+  }
 }

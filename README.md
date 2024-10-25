@@ -1,6 +1,6 @@
 # textlint-rule-for-latex-report
 
-大学のレポート用の[textlint](https://github.com/textlint/textlint 'textlint')ルール。
+大学のレポート用の[textlint](https://github.com/textlint/textlint 'textlint')ルールセットです。
 
 ## Example
 
