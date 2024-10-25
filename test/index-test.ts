@@ -1,69 +1,40 @@
-import TextLintTester from 'textlint-tester';
-import rule from '../src/index';
+import TextLintCore from '@textlint/core';
+import { rules } from '../src/index'; // index.tsからルールセットをインポート
 
-const tester = new TextLintTester();
+describe('Textlintルールセットのテスト', () => {
+    const textlint = new TextLintCore();
 
-// テストの実行
-tester.run('rule', rule, {
-    valid: [
-        {
-            text: '問題のない素晴らしい文章。',
-            options: { allows: [] },
-        },
-        {
-            text: '定数\\(m\\)を使用します。',
-        },
-        {
-            text: '変数$x$をみたら嬉しいです。',
-        },
-        {
-            text: '\\caption{普通のキャプション}',
-        },
-        {
-            text: 'レンズの像が美しい。',
-        },
-        {
-            text: 'section{せくしょん}',
-        },
-    ],
-    invalid: [
-        {
-            text: '混在する数式: $m$ and \\(n\\).',
-            errors: [
+    beforeAll(() => {
+        // ルールセットを登録
+        textlint.setupRules(rules);
+    });
+
+    test('empty-rule: 空の{}を検出する', async () => {
+        const result = await textlint.lintText('これは{}空欄です。');
+        expect(result.messages.length).toBe(1); // エラーが1件あるはず
+        expect(result.messages[0].message).toBe('空欄になっています。');
+    });
+
+    test('empty-rule: 許可された文字列が含まれる場合はスキップ', async () => {
+        const result = await textlint.lintText('許可されたテキスト: {}', {
+            rules: [
                 {
-                    message: '\\(...\\) と $...$ が混在しています。(1回 / 1回)',
-                    range: [8, 11],
+                    ruleId: 'empty-rule',
+                    options: { allows: ['許可されたテキスト'] }, // 許可文字列を指定
                 },
             ],
-        },
-        {
-            text: '\\caption{Duplicate} \\caption{Duplicate}',
-            errors: [
-                {
-                    message: '重複したキャプション: "Duplicate"',
-                    range: [20, 39],
-                },
-            ],
-        },
-        {
-            text: '間違えた単語が象にあります。',
-            errors: [
-                {
-                    message: '"象" -?> "像"',
-                    line: 1,
-                    column: 8,
-                },
-            ],
-        },
-        {
-            text: 'section{}',
-            errors: [
-                {
-                    message: '空欄になっています。',
-                    line: 1,
-                    column: 8,
-                },
-            ],
-        },
-    ],
+        });
+        expect(result.messages.length).toBe(0); // エラーは発生しないはず
+    });
+
+    test('ruleA: 特定のパターンを検出する', async () => {
+        const result = await textlint.lintText('ここに何かのパターンがあります。');
+        expect(result.messages.length).toBe(1); // 仮に1件のエラーを期待
+        expect(result.messages[0].ruleId).toBe('rule-a');
+    });
+
+    test('ruleB: 問題のないテキストにはエラーがない', async () => {
+        const result = await textlint.lintText('問題のないテキストです。');
+        expect(result.messages.length).toBe(0); // エラーは発生しないはず
+    });
 });

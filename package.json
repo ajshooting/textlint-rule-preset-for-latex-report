@@ -33,7 +33,7 @@
   "description": "This rule check miss of latex report",
   "license": "MIT",
   "exports": {
-    "./rules/empty-rule": "./lib/rules/empty-rule.js",
+    "./src/rules/textlint-rule-latex-no-empty.ts": "./lib/rules/textlint-rule-latex-no-empty.ts",
     ".": "./lib/index.js"
   }
 }

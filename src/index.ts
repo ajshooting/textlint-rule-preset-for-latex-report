@@ -7,4 +7,4 @@ export const rules: Record<string, TextlintRuleModule<any>> = {
 };
 
 // 必要に応じて個別エクスポートも提供
-export { emptyRule };
+export default { emptyRule };
