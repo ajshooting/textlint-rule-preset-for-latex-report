@@ -76,6 +76,8 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                     report(node, ruleError);
                 });
             }
+
+            // 表の有効数字チェック
         },
         [Syntax.Str](node) {
             // "Str" node
@@ -108,15 +110,11 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 report(node, ruleError);
             }
             // ↑表の一番上のところ斜体にしないがちだからそこも一緒に
-            // フィルターで大文字小文字制御する？でDとか斜体の時あるし..
 
-            // OAばーとかの立体
+            // OAばーとかの立体？
+            // キャプションなし
 
-            // キャプションなしとか
-
-            // 単位チェック(有無、空間、)
-            // これもめんどくさそう、本当に
-            // 単位の有無をチェック
+            // 単位の有無をチェック()
             const noUnitRegex = /\d\}?\s*$/g;
             const noUnitMatches = Array.from(text.matchAll(noUnitRegex));
             for (const match of noUnitMatches) {
@@ -127,8 +125,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                 });
                 report(node, ruleError);
             }
-
-            // 単位との間の空白
+            // 単位との間の空白(要変更)
             const unitRegex = /\d\}?\s*(.*?)\s*\\\w*?\{.*?\}\s*$/g;
             const unitMatches = Array.from(text.matchAll(unitRegex));
             for (const match of unitMatches) {
@@ -148,11 +145,6 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
                     report(node, ruleError);
                 }
             }
-
-            // 表の有効数字チェック
-            // これめっちゃめんどくさそう！
-
-            // \times 10^n とかも考慮する？かっこつきで！
 
             // 不確かさの有効数字チェック(小数点以下の桁数)
             const pmRegex = /(\d+)\.?(\d*)\s*(?:\\pm|\\mp)\s*(\d+)\.?(\d*)/g;
