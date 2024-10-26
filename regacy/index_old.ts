@@ -1,5 +1,5 @@
 import type { TextlintRuleModule } from '@textlint/types';
-import { dictionary } from './dictionary';
+import { dictionary } from '../src/dictionary';
 
 export interface Options {
     // If node's text includes allowed text, does not report.

@@ -1,7 +1,7 @@
 import { TextlintRuleModule } from '@textlint/types';
 
 const report: TextlintRuleModule = (context) => {
-    const { Syntax, RuleError, report, getSource, locator } = context;
+    const { Syntax, getSource } = context;
     return {
         [Syntax.Document](node) {
             // 文書内のすべての文字列
