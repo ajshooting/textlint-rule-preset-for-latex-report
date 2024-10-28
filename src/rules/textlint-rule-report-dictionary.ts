@@ -32,4 +32,7 @@ const report: TextlintRuleModule<Options> = (context, options = {}) => {
     };
 };
 
-export default report;
+export default {
+    linter: report,
+    fixer: report,
+};
