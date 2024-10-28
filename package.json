@@ -2,12 +2,12 @@
   "name": "textlint-rule-for-latex-report",
   "version": "1.0.0",
   "keywords": [
-    "textlintrule"
+    "textlintrule",
+    "preset"
   ],
   "main": "lib/index.js",
   "files": [
-    "lib/",
-    "src/"
+    "lib"
   ],
   "textlint": {
     "preset": "textlint-rule-for-latex-report"
@@ -34,13 +34,9 @@
   "license": "MIT",
   "exports": {
     ".": "./lib/index.js",
-    "./src/rules/textlint-rule-latex-italic-check": "./lib/rules/textlint-rule-latex-italic-check.js",
-    "./src/rules/textlint-rule-latex-no-empty": "./lib/rules/textlint-rule-latex-no-empty.js",
-    "./src/rules/textlint-rule-latex-no-mix-inline": "./lib/rules/textlint-rule-latex-no-mix-inline.js",
-    "./src/rules/textlint-rule-latex-no-same-captions": "./lib/rules/textlint-rule-latex-no-same-captions.js",
-    "./src/rules/textlint-rule-latex-pm": "./lib/rules/textlint-rule-latex-pm.js",
-    "./src/rules/textlint-rule-latex-table": "./lib/rules/textlint-rule-latex-table.js",
-    "./src/rules/textlint-rule-latex-unit": "./lib/rules/textlint-rule-latex-unit.js",
-    "./src/rules/textlint-rule-report-dictionary": "./lib/rules/textlint-rule-report-dictionary.js"
+    "./rules/*": "./lib/rules/*"
+  },
+  "dependencies": {
+    "@textlint/module-interop": "^14.3.0"
   }
 }

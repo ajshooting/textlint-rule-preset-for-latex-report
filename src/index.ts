@@ -1,41 +1,26 @@
-import { TextlintRuleModule } from '@textlint/types';
-import textlint_rule_latex_italic_check from './rules/textlint-rule-latex-italic-check';
-import textlint_rule_latex_no_empty from './rules/textlint-rule-latex-no-empty';
-import textlint_rule_latex_no_mix_inline from './rules/textlint-rule-latex-no-mix-inline';
-import textlint_rule_latex_no_same_captions from './rules/textlint-rule-latex-no-same-captions';
-import textlint_rule_latex_pm from './rules/textlint-rule-latex-pm';
-import textlint_rule_latex_table from './rules/textlint-rule-latex-table';
-import textlint_rule_latex_unit from './rules/textlint-rule-latex-unit';
-import textlint_rule_report_dictionary from './rules/textlint-rule-report-dictionary';
+'use strict';
+import { moduleInterop } from '@textlint/module-interop';
 
-// ルールセットとしてエクスポート
-export const rules: Record<string, TextlintRuleModule<any>> = {
-    'textlint-rule-latex-no-empty': textlint_rule_latex_no_empty,
-    'textlint-rule-latex-italic-check': textlint_rule_latex_italic_check,
-    'textlint-rule-latex-no-mix-inline': textlint_rule_latex_no_mix_inline,
-    'textlint-rule-latex-no-same-captions': textlint_rule_latex_no_same_captions,
-    'textlint-rule-latex-pm': textlint_rule_latex_pm,
-    'textlint-rule-latex-table': textlint_rule_latex_table,
-    'textlint-rule-latex-unit': textlint_rule_latex_unit,
-    'textlint-rule-report-dictionary': textlint_rule_report_dictionary,
+module.exports = {
+    rules: {
+        'latex-italic-check': moduleInterop(require('./rules/textlint-rule-latex-italic-check')),
+        'latex-no-empty': moduleInterop(require('./rules/textlint-rule-latex-no-empty')),
+        'latex-no-mix-inline': moduleInterop(require('./rules/textlint-rule-latex-no-mix-inline')),
+        'latex-no-same-captions': moduleInterop(require('./rules/textlint-rule-latex-no-same-captions')),
+        'latex-pm': moduleInterop(require('./rules/textlint-rule-latex-pm')),
+        'latex-table': moduleInterop(require('./rules/textlint-rule-latex-table')),
+        'latex-unit': moduleInterop(require('./rules/textlint-rule-latex-unit')),
+        'report-dictionary': moduleInterop(require('./rules/textlint-rule-report-dictionary')),
+    },
+    rulesConfig: {
+        // ルールごとの詳細設定（必要に応じてカスタマイズ可能）
+        'latex-italic-check': true,
+        'latex-no-empty': true,
+        'latex-no-mix-inline': true,
+        'latex-no-same-captions': true,
+        'latex-pm': true,
+        'latex-table': true,
+        'latex-unit': true,
+        'report-dictionary': true,
+    },
 };
-
-// プリセット形式でエクスポート（全ルールがデフォルトで有効）
-const preset = {
-    rules: rules,
-    rulesConfig: Object.fromEntries(Object.keys(rules).map((ruleName) => [ruleName, true])),
-};
-
-export default preset;
-
-// 必要に応じて個別エクスポートも提供
-// export default {
-//     textlint_rule_latex_no_empty,
-//     textlint_rule_latex_italic_check,
-//     textlint_rule_latex_no_mix_inline,
-//     textlint_rule_latex_no_same_captions,
-//     textlint_rule_latex_pm,
-//     textlint_rule_latex_table,
-//     textlint_rule_latex_unit,
-//     textlint_rule_report_dictionary,
-// };
