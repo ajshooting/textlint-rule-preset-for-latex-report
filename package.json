@@ -1,42 +1,35 @@
 {
-  "name": "textlint-rule-for-latex-report",
-  "version": "1.0.0",
-  "keywords": [
-    "textlintrule",
-    "preset"
-  ],
-  "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
-  "textlint": {
-    "preset": "textlint-rule-for-latex-report"
-  },
-  "scripts": {
-    "test": "textlint-scripts test",
-    "build": "textlint-scripts build",
-    "prepublish": "npm run --if-present build",
-    "watch": "textlint-scripts build --watch"
-  },
-  "devDependencies": {
-    "@textlint/types": "^14.2.1",
-    "@types/node": "^20.16.11",
-    "textlint-scripts": "^14.2.1",
-    "textlint-tester": "^14.2.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "author": "ajshooting",
-  "description": "This rule check miss of latex report",
-  "license": "MIT",
-  "exports": {
-    ".": "./lib/index.js",
-    "./rules/*": "./lib/rules/*"
-  },
-  "dependencies": {
-    "@textlint/module-interop": "^14.3.0"
-  }
+    "name": "textlint-rule-for-latex-report",
+    "version": "1.0.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ajshooting/textlint-rule-for-latex-report.git"
+    },
+    "author": "ajshooting",
+    "description": "This rule check miss of latex report",
+    "main": "lib/textlint-rule-for-latex-report.js",
+    "license": "MIT",
+    "keywords": [
+        "preset",
+        "rule",
+        "textlint",
+        "textlintrule"
+    ],
+    "scripts": {
+        "test": "textlint-scripts test",
+        "build": "textlint-scripts build",
+        "prepublish": "npm run --if-present build",
+        "watch": "textlint-scripts build --watch"
+    },
+    "devDependencies": {
+        "@textlint/types": "^14.2.1",
+        "@types/node": "^20.16.11",
+        "textlint-scripts": "^14.2.1",
+        "textlint-tester": "^14.2.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "@textlint/module-interop": "^14.3.0"
+    }
 }
