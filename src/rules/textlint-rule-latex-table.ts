@@ -1,6 +1,6 @@
-import { TextlintRuleModule } from '@textlint/types';
+import { TextlintRuleReporter } from '@textlint/types';
 
-const report: TextlintRuleModule = (context) => {
+const report: TextlintRuleReporter = (context) => {
     const { Syntax, getSource } = context;
     return {
         [Syntax.Document](node) {

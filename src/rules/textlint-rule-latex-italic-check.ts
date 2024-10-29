@@ -1,10 +1,10 @@
-import { TextlintRuleModule } from '@textlint/types';
+import { TextlintRuleReporter } from '@textlint/types';
 
 interface Options {
     allows?: string[];
 }
 
-const report: TextlintRuleModule<Options> = (context, options = {}) => {
+const report: TextlintRuleReporter<Options> = (context, options = {}) => {
     const { Syntax, RuleError, report, locator } = context;
     const allows = options.allows ?? [];
     return {
