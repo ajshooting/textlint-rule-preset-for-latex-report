@@ -6,6 +6,9 @@
 ## Install
 
 ```cli
+yarn install
+yarn build
+
 npm install "/path"
 yarn add "/path"
 ```
