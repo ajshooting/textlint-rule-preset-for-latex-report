@@ -1,14 +1,25 @@
 {
   "name": "textlint-rule-preset-for-latex-report",
-  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ajshooting/textlint-rule-preset-for-latex-report.git"
   },
   "author": "ajshooting",
-  "description": "This rule check miss of latex report",
-  "main": "lib/textlint-rule-for-latex-report.js",
+  "email": "ajshooting.aj@gmail.com",
+  "homepage": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report/issues"
+  },
+  "version": "1.0.0",
+  "description": "This rule check miss of latex report",
+  "main": "lib/textlint-rule-preset-for-latex-report.js",
+  "files": [
+    "lib"
+  ],
+  "directories": {
+    "test": "test"
+  },
   "keywords": [
     "preset",
     "rule",
