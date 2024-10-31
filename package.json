@@ -1,5 +1,5 @@
 {
-    "name": "textlint-rule-for-latex-report",
+    "name": "textlint-rule-preset-for-latex-report",
     "version": "1.0.0",
     "repository": {
         "type": "git",
@@ -30,6 +30,7 @@
         "typescript": "^5.3.3"
     },
     "dependencies": {
-        "@textlint/module-interop": "^14.3.0"
+        "@textlint/module-interop": "^14.3.0",
+        "@types/jest": "^29.5.14"
     }
 }
