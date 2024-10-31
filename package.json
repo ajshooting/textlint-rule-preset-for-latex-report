@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ajshooting/textlint-rule-for-latex-report.git"
+        "url": "git+https://github.com/ajshooting/textlint-rule-preset-for-latex-report.git"
     },
     "author": "ajshooting",
     "description": "This rule check miss of latex report",
