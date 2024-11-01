@@ -17,12 +17,15 @@ const report: TextlintRuleReporter = (context) => {
                 return tables.map((table) => {
                     const rows = table
                         .split('\\\\')
-                        .map((row) => row.replace(/\\hline/g, '').trim())
+                        .map((row) => row.trim())
                         .filter((row) => row.length > 0)
                         .map((row) => row.split('&').map((cell) => cell.trim()));
                     return rows;
                 });
             }
+
+            const tables = extractTables(fullText);
+
 
             // 小数点以下の桁数と位置の情報
             function decimalPlaces(value: string): { places: number; index: number | null } {
@@ -33,15 +36,13 @@ const report: TextlintRuleReporter = (context) => {
                 return { places: 0, index: null };
             }
 
-            const tables = extractTables(fullText);
-
             // 各列の有効数字が揃っているか確認
             tables.forEach((table) => {
                 const columnCount = table[1]?.length || 0;
                 for (let col = 0; col < columnCount; col++) {
                     // 最初は\begin~見出し,最後は\end{tabular}
                     const decimalsInColumn = table.slice(1, -1).map((row, rowIndex) => {
-                        const { places, index } = decimalPlaces(row[col]);
+                        const { places, index } = decimalPlaces(row[col].replace('\\hline', '').trim());
                         return { places, index, rowIndex: rowIndex + 1 };
                     });
                     const firstPlaces = decimalsInColumn[0].places;
@@ -60,6 +61,11 @@ const report: TextlintRuleReporter = (context) => {
                         });
                     }
                 }
+            });
+
+            // 横線の体裁
+            tables.forEach((table) => {
+
             });
         },
     };
