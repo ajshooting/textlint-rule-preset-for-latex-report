@@ -26,7 +26,7 @@
     "textlintrule"
   ],
   "scripts": {
-    "test": "textlint-scripts test",
+    "test": "cd test && yarn install && yarn test",
     "build": "textlint-scripts build",
     "prepublish": "npm run --if-present build",
     "watch": "textlint-scripts build --watch"
