@@ -43,7 +43,7 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
                     });
                     report(node, ruleError);
                 } else if (!isMatch) {
-                    const ruleError = new RuleError('単位の前には空白"\\,"を使用するべきです。', {
+                    const ruleError = new RuleError('単位の前には空白"\\,"の使用が望ましいです', {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);

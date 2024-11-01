@@ -22,7 +22,7 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
             for (const match of emptyMatches) {
                 const index = match.index ?? 0;
                 const matchRange = [index, index + match[0].length] as const;
-                const ruleError = new RuleError('空欄になっています。', {
+                const ruleError = new RuleError('空欄になっています', {
                     padding: locator.range(matchRange),
                 });
                 report(node, ruleError);

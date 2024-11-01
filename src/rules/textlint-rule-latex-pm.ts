@@ -22,7 +22,7 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
                 // 小数点以下の桁数が一致していない
                 if (match[2].length !== match[4].length) {
                     const matchRange = [index, index + match[0].length] as const;
-                    const ruleError = new RuleError('小数点以下の桁数が揃っていません。', {
+                    const ruleError = new RuleError('小数点以下の桁数が揃っていません', {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);

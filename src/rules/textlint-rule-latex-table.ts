@@ -7,8 +7,6 @@ const report: TextlintRuleReporter = (context) => {
             // 文書内のすべての文字列
             const fullText = getSource(node);
 
-            // 表の有効数字チェック
-
             // tabular環境を抽出する
             function extractTables(text: string): string[][][] {
                 const tableRegex = /\\begin\{tabular\}[\s\S]*?\\end\{tabular\}/g;
@@ -25,7 +23,6 @@ const report: TextlintRuleReporter = (context) => {
             }
 
             const tables = extractTables(fullText);
-            console.log(tables);
 
             // 小数点以下の桁数と位置の情報
             function decimalPlaces(value: string): { places: number; index: number | null } {
@@ -36,7 +33,7 @@ const report: TextlintRuleReporter = (context) => {
                 return { places: 0, index: null };
             }
 
-            // 各列の有効数字が揃っているか確認
+            // 各列の有効数字が揃っているか
             tables.forEach((table) => {
                 const columnCount = table[1]?.length || 0;
                 for (let col = 0; col < columnCount; col++) {
