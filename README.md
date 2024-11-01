@@ -1,6 +1,6 @@
 # textlint-rule-preset-for-latex-report
 
-大学のレポート用の[textlint](https://github.com/textlint/textlint 'textlint')ルールプリセットです。  
+大学の実験レポートの体裁とかをチェックする[textlint](https://github.com/textlint/textlint 'textlint')ルールプリセットです。  
 完全に自分用に作成しています。お好みで色々変更してください。  
 
 ## Install

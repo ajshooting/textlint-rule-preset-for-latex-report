@@ -5,14 +5,13 @@
     "url": "git+https://github.com/ajshooting/textlint-rule-preset-for-latex-report.git"
   },
   "author": "ajshooting",
-  "email": "ajshooting.aj@gmail.com",
   "homepage": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report/issues"
   },
   "version": "1.0.0",
-  "description": "This rule check miss of latex report",
+  "description": "This rule preset checks miss of latex report",
   "main": "lib/textlint-rule-preset-for-latex-report.js",
   "files": [
     "lib"

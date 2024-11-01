@@ -61,8 +61,6 @@ const report: TextlintRuleReporter = (context) => {
                     }
                 }
             });
-
-            // キャプションなしの図
         },
     };
 };
