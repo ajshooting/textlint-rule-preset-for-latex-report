@@ -16,17 +16,19 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
                 return;
             }
 
-            // 単位の有無をチェック()
-            const noUnitRegex = /\d\}?\s*$/g;
-            const noUnitMatches = Array.from(text.matchAll(noUnitRegex));
-            for (const match of noUnitMatches) {
-                const index = match.index ?? 0;
-                const matchRange = [index, index + match[0].length] as const;
-                const ruleError = new RuleError('単位が必要かもしれません', {
-                    padding: locator.range(matchRange),
-                });
-                report(node, ruleError);
-            }
+            // 単位の有無をチェック(一旦廃止/表とかに全部なっちゃう)
+            // StrじゃなくてDocumentでやる..? 要検討
+            // const noUnitRegex = /\d\}?\s*$/g;
+            // const noUnitMatches = Array.from(text.matchAll(noUnitRegex));
+            // for (const match of noUnitMatches) {
+            //     const index = match.index ?? 0;
+            //     const matchRange = [index, index + match[0].length] as const;
+            //     const ruleError = new RuleError('単位が必要かもしれません', {
+            //         padding: locator.range(matchRange),
+            //     });
+            //     report(node, ruleError);
+            // }
+
             // 単位との間の空白(要変更)
             const unitRegex = /\d\}?\s*(.*?)\s*\\\w*?\{.*?\}\s*$/g;
             const unitMatches = Array.from(text.matchAll(unitRegex));
