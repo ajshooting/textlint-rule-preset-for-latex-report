@@ -24,6 +24,24 @@ const report: TextlintRuleReporter = (context) => {
                     seenCaptions.add(captionText);
                 }
             }
+
+            // セクションの完全一致
+            const tagRegex = /\\(section|subsection|subsubsection)\{(.*?)\}/g;
+            const tagMatches = Array.from(fullText.matchAll(tagRegex));
+            const seenTag = new Set<string>();
+            for (const match of tagMatches) {
+                const captionText = match[1];
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[0].length] as const;
+                if (seenTag.has(captionText)) {
+                    const ruleError = new RuleError(`重複したセクション: "${captionText}"`, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                } else {
+                    seenTag.add(captionText);
+                }
+            }
         },
     };
 };
