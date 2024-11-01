@@ -25,7 +25,7 @@ const report: TextlintRuleReporter = (context) => {
             }
 
             const tables = extractTables(fullText);
-
+            console.log(tables);
 
             // 小数点以下の桁数と位置の情報
             function decimalPlaces(value: string): { places: number; index: number | null } {
@@ -42,7 +42,7 @@ const report: TextlintRuleReporter = (context) => {
                 for (let col = 0; col < columnCount; col++) {
                     // 最初は\begin~見出し,最後は\end{tabular}
                     const decimalsInColumn = table.slice(1, -1).map((row, rowIndex) => {
-                        const { places, index } = decimalPlaces(row[col].replace('\\hline', '').trim());
+                        const { places, index } = decimalPlaces(row[col].replace(/\\hline\n*\s*/, '').trim());
                         return { places, index, rowIndex: rowIndex + 1 };
                     });
                     const firstPlaces = decimalsInColumn[0].places;
@@ -63,9 +63,40 @@ const report: TextlintRuleReporter = (context) => {
                 }
             });
 
-            // 横線の体裁
+            // 罫線の本数/2-1-2がいいよね
             tables.forEach((table) => {
-
+                const ruleRegex1 = /\\hline\s*\n?\s*\\hline/;
+                const ruleRegex2 = /\\hline\s*\n\s*/;
+                const topBorderMatch = table[0][0].match(ruleRegex1);
+                const middleBorderMatch = table[1][0].match(ruleRegex2);
+                const bottomBorderMatch = table[table.length - 1][0].match(ruleRegex1);
+                if (!topBorderMatch) {
+                    const message = '表の上部の罫線は2本が望ましいです';
+                    const startIndex = fullText.indexOf(table[0][0]);
+                    const matchRange = [startIndex, startIndex + table[0][0].length] as const;
+                    const ruleError = new RuleError(message, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+                if (!middleBorderMatch) {
+                    const message = '見出しの罫線は1本が望ましいです';
+                    const startIndex = fullText.indexOf(table[1][0]);
+                    const matchRange = [startIndex, startIndex + table[1][0].length] as const;
+                    const ruleError = new RuleError(message, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
+                if (!bottomBorderMatch) {
+                    const message = '表の下部の罫線は2本が望ましいです';
+                    const startIndex = fullText.indexOf(table[table.length - 1][0]);
+                    const matchRange = [startIndex, startIndex + table[table.length - 1][0].length] as const;
+                    const ruleError = new RuleError(message, {
+                        padding: locator.range(matchRange),
+                    });
+                    report(node, ruleError);
+                }
             });
         },
     };
