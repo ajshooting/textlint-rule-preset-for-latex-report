@@ -11,7 +11,7 @@ yarn build
 yarn add "/path"
 ```
 
-## 使用方法
+## Usage
 
 Via `.textlintrc`(Recommended)
 
@@ -29,7 +29,7 @@ Via CLI
 textlint --rule preset-for-latex-report README.md
 ```
 
-## オプション
+## Option
 
 ```json5
 {
