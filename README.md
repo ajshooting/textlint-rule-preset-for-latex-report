@@ -31,7 +31,7 @@ textlint --rule preset-for-latex-report README.md
 
 ## オプション
 
-```json
+```json5
 {
     "rules": {
         "preset-for-latex-report": {
