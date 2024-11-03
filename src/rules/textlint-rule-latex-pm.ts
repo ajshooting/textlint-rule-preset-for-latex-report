@@ -46,7 +46,7 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
                         padding: locator.range(matchRange),
                     });
                     report(node, ruleError);
-                } else if (lastDigit <= 3) {
+                } else if (lastDigit <= 3 && lastDigit > 0) {
                     const matchRange = [index, index + match[0].length] as const;
                     const ruleError = new RuleError('1-3の不確かさは2桁が望ましいです :' + lastDigit.toString().length + '桁', {
                         padding: locator.range(matchRange),
