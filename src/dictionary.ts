@@ -13,4 +13,9 @@ export const dictionary: DictionaryEntry[] = [
     { incorrect: '入社|入車|入舎', correct: '入射' },
     { incorrect: '指揮|四季', correct: '式' },
     { incorrect: '(?<!巨)(?<!無量)大数', correct: '対数' },
+    { incorrect: '感覚', correct: '間隔' },
+    { incorrect: '自国', correct: '時刻' },
+    { incorrect: '加工|河口', correct: '下降' },
+    { incorrect: '好転|荒天', correct: '交点' },
+    { incorrect: '雪片', correct: '切片' },
 ];
