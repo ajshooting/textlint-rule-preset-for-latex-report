@@ -30,7 +30,7 @@ const report: TextlintRuleReporter = (context) => {
             const tagMatches = Array.from(fullText.matchAll(tagRegex));
             const seenTag = new Set<string>();
             for (const match of tagMatches) {
-                const captionText = match[1];
+                const captionText = match[2];
                 const index = match.index ?? 0;
                 const matchRange = [index, index + match[0].length] as const;
                 if (seenTag.has(captionText)) {
