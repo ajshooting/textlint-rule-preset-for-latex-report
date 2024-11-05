@@ -33,13 +33,13 @@
   },
   "devDependencies": {
     "@textlint/types": "^14.3.0",
+    "@types/node": "^22.9.0",
     "textlint-scripts": "^14.2.1",
     "textlint-tester": "^14.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@textlint/module-interop": "^14.3.0",
-    "@types/node": "^22.8.5"
+    "@textlint/module-interop": "^14.3.0"
   }
 }
