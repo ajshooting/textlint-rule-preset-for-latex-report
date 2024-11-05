@@ -15,7 +15,7 @@ const report: TextlintRuleReporter = (context) => {
             if (mixedMathCount > 0 && mathParenCount > 0) {
                 const isMixedMathFewer = mixedMathCount <= mathParenCount;
                 const targetMatches = isMixedMathFewer ? mixedMathMatches : mathParenMatches;
-                const message = `\\(...\\) と $...$ が混在しています。(${mathParenCount}回 / ${mixedMathCount}回)`;
+                const message = `\\(...\\) と $...$ が混在しています (${mathParenCount}回 / ${mixedMathCount}回)`;
                 // 少ない方法に警告を出す
                 targetMatches.forEach((match) => {
                     const index = match.index ?? 0;
