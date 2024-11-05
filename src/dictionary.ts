@@ -18,4 +18,10 @@ export const dictionary: DictionaryEntry[] = [
     { incorrect: '加工|河口', correct: '下降' },
     { incorrect: '好転|荒天', correct: '交点' },
     { incorrect: '雪片', correct: '切片' },
+    { incorrect: '焼く', correct: '約' },
+    { incorrect: 'のの', correct: 'の' },
+    { incorrect: '仕事(等量|棟梁|投了)', correct: '仕事当量' },
+    { incorrect: '\\rm', correct: '\\mathrm' },
+    { incorrect: '°F', correct: '\\(^\\circ\\)F' },
+    { incorrect: '°C', correct: '\\(^\\circ\\)C' },
 ];
