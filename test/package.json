@@ -4,7 +4,7 @@
     "homepage": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report",
     "version": "1.0.0-local",
     "scripts": {
-        "test": "textlint --debug --rule preset-for-latex-report test.tex"
+        "test": "textlint --debug ./test.tex"
     },
     "author": "ajshooting",
     "license": "MIT",

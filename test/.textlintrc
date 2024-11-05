@@ -1,4 +1,11 @@
 {
+    "plugins": {
+        "@textlint/markdown": {
+            "extensions": [
+                ".tex"
+            ]
+        }
+    },
     "rules": {
         "preset-for-latex-report": true
     }
