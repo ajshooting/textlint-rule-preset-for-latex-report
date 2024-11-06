@@ -28,8 +28,8 @@
   "scripts": {
     "test": "cd test && yarn add '../' --check-files && yarn install && yarn test",
     "build": "textlint-scripts build",
-    "prepublish": "npm run --if-present build",
-    "watch": "textlint-scripts build --watch"
+    "watch": "textlint-scripts build --watch",
+    "version-up": "npm version patch && git push --follow-tags"
   },
   "devDependencies": {
     "@textlint/types": "^14.3.0",
