@@ -11,7 +11,7 @@
     "url": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report/issues"
   },
   "version": "0.0.1",
-  "description": "This rule preset checks for common mistakes in LaTeX reports",
+  "description": "大学の実験レポートの体裁をチェックするtextlintルールプリセット",
   "main": "lib/textlint-rule-preset-for-latex-report.js",
   "files": [
     "lib"

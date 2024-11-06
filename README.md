@@ -1,14 +1,14 @@
 # textlint-rule-preset-for-latex-report
 
-大学の実験レポートの体裁とかをチェックする[textlint](https://github.com/textlint/textlint 'textlint')ルールプリセットです。  
+大学の実験レポートの体裁をチェックする[textlint](https://github.com/textlint/textlint 'textlint')ルールプリセットです。  
 完全に自分用に作成しています。お好みで色々変更してください。
 
 ## Install
 
 ```cli
-yarn install
-yarn build
-yarn add "/path"
+npm i textlint-rule-preset-for-latex-report
+
+yarn add textlint-rule-preset-for-latex-report
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ textlint --rule preset-for-latex-report README.md
 {
     "rules": {
         "preset-for-latex-report": {
-            // 斜体になっていない文字を検出(ja-unnatural-alphabetと競合)
+            // 斜体になっていない可能性のある文字を検出(一部ja-unnatural-alphabetと競合)
             "latex-italic-check": true,
             // 空の波かっこ{}の検出
             "latex-no-empty": true,
