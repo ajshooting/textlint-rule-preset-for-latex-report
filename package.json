@@ -26,7 +26,7 @@
     "textlintrule"
   ],
   "scripts": {
-    "test": "cd test && yarn install && yarn test",
+    "test": "cd test && yarn remove textlint-rule-preset-for-latex-report && yarn install && yarn test",
     "build": "textlint-scripts build",
     "prepublish": "npm run --if-present build",
     "watch": "textlint-scripts build --watch"
