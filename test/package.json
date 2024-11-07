@@ -10,6 +10,6 @@
     "license": "MIT",
     "dependencies": {
         "textlint": "^14.0.0",
-        "textlint-rule-preset-for-latex-report": "../"
+        "textlint-rule-preset-for-latex-report": "file:../"
     }
 }

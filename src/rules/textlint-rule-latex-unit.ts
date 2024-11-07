@@ -49,6 +49,19 @@ const report: TextlintRuleReporter<Options> = (context, options = {}) => {
                     report(node, ruleError);
                 }
             }
+
+            // 文章中の単位の空白(?)
+            // \(a\)[cm] とか \(a \mathrm{[cm]}\) とかを検知？
+            const unitSpaceRegex = /\w\\\)\s*\[.*?\]|\w\s*\\(math)?rm\{\[.*?\]\}/g;
+            const unitSpaceMatches = Array.from(text.matchAll(unitSpaceRegex));
+            for (const match of unitSpaceMatches) {
+                const index = match.index ?? 0;
+                const matchRange = [index, index + match[0].length] as const;
+                const ruleError = new RuleError('数字と単位の間には空白を開けることは望ましいです', {
+                    padding: locator.range(matchRange),
+                });
+                report(node, ruleError);
+            }
         },
     };
 };
