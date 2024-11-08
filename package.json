@@ -26,7 +26,7 @@
     "textlintrule"
   ],
   "scripts": {
-    "test": "cd test && yarn add '../' --check-files && yarn install && yarn test",
+    "test": "cd test && yarn install && yarn test",
     "build": "textlint-scripts build",
     "watch": "textlint-scripts build --watch",
     "version-up": "npm version patch && git push --follow-tags"

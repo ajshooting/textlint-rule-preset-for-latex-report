@@ -2,7 +2,7 @@
     "private": true,
     "name": "textlint-rule-preset-for-latex-report",
     "homepage": "https://github.com/ajshooting/textlint-rule-preset-for-latex-report",
-    "version": "1.0.0-local",
+    "version": "0.0.0-local",
     "scripts": {
         "test": "textlint ./test.tex"
     },
