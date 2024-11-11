@@ -3,5 +3,3 @@ node_modules
 /lib
 
 .DS_Store
-.vscode
-.npmignore
