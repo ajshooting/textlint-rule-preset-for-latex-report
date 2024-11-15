@@ -23,13 +23,13 @@ jobs:
 
             - name: Get previous tag
               id: prev_tag
-              run: echo ::set-output name=tag::$(git describe --tags --abbrev=0 HEAD^)
+              run: echo "tag=$(git describe --tags --abbrev=0 HEAD^)" >> $GITHUB_ENV
 
             - name: Get commit messages
               id: commits
               run: |
-                commits=$(git log ${{ steps.prev_tag.outputs.tag }}..HEAD --pretty=format:"- %s")
-                echo "::set-output name=commits::${commits}"
+                commits=$(git log ${{ env.tag }}..HEAD --pretty=format:"- %s")
+                echo "commits=${commits}" >> $GITHUB_ENV
 
             - name: Create GitHub Release
               id: create_release
@@ -43,9 +43,9 @@ jobs:
                       ## Release
 
                       ### 差分
-                      [差分](https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.tag }}...${{ github.ref }})
+                      [差分](https://github.com/${{ github.repository }}/compare/${{ env.tag }}...${{ github.ref }})
 
                       ### 変更点
-                      ${{ steps.commits.outputs.commits }}
+                      ${{ env.commits }}
                   draft: false
                   prerelease: false
