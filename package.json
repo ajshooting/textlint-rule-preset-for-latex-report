@@ -29,7 +29,7 @@
     "test": "cd test && yarn install && yarn test",
     "build": "textlint-scripts build",
     "watch": "textlint-scripts build --watch",
-    "version-up": "npm version patch && git push --follow-tags"
+    "version-up": "npm version patch && git push --follow-tags && git push origin --tags"
   },
   "devDependencies": {
     "@textlint/types": "^14.3.0",
