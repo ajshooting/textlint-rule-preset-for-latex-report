@@ -38,22 +38,14 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   tag_name: ${{ github.ref }}
-                  release_name: Release ${{ github.ref }}
+                  release_name: ${{ github.ref }}
                   body: |
-                      ## 自動生成されたリリースノート
+                      ## Release
 
                       ### 差分
-                      [前回のリリースとの差分](https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.tag }}...${{ github.ref }})
+                      [差分](https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.tag }}...${{ github.ref }})
 
                       ### 変更点
                       ${{ steps.commits.outputs.commits }}
                   draft: false
                   prerelease: false
-
-            - name: Upload Release Asset
-              uses: actions/upload-release-asset@v1
-              with:
-                  upload_url: ${{ steps.create_release.outputs.upload_url }}
-                  asset_path: path/to/your/asset.zip # ここにアップロードするファイルのパスを指定
-                  asset_name: your-asset.zip
-                  asset_content_type: application/zip
