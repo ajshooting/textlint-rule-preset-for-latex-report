@@ -21,6 +21,16 @@ jobs:
             - name: Install dependencies
               run: yarn install
 
+            - name: Get previous tag
+              id: prev_tag
+              run: echo ::set-output name=tag::$(git describe --tags --abbrev=0 HEAD^)
+
+            - name: Get commit messages
+              id: commits
+              run: |
+                commits=$(git log ${{ steps.prev_tag.outputs.tag }}..HEAD --pretty=format:"- %s")
+                echo "::set-output name=commits::${commits}"
+
             - name: Create GitHub Release
               id: create_release
               uses: actions/create-release@v1
@@ -30,7 +40,13 @@ jobs:
                   tag_name: ${{ github.ref }}
                   release_name: Release ${{ github.ref }}
                   body: |
-                      自動生成されたリリースノート
+                      ## 自動生成されたリリースノート
+
+                      ### 差分
+                      [前回のリリースとの差分](https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.tag }}...${{ github.ref }})
+
+                      ### 変更点
+                      ${{ steps.commits.outputs.commits }}
                   draft: false
                   prerelease: false
 
