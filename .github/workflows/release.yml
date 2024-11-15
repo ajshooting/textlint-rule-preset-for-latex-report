@@ -3,7 +3,7 @@ name: Release
 on:
     push:
         tags:
-            - 'v*.*.*' # バージョンタグにマッチする
+            - 'v*.*.*'
 
 jobs:
     release:
@@ -16,7 +16,7 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: '16' # 使用するNode.jsのバージョン
+                  node-version: '18'
 
             - name: Install dependencies
               run: yarn install
