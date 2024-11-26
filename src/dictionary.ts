@@ -24,4 +24,12 @@ export const dictionary: DictionaryEntry[] = [
     { incorrect: '\\rm', correct: '\\mathrm' },
     { incorrect: '°F', correct: '\\(^\\circ\\)F' },
     { incorrect: '°C', correct: '\\(^\\circ\\)C' },
+    { incorrect: '振子', correct: '振り子' },
+    { incorrect: '金属級(?!シリコン|Si)', correct: '金属球' },
+    { incorrect: 'されいる', correct: 'されている' },
+    { incorrect: 'ボルタ振り子', correct: 'ボルダ振り子' },
+    { incorrect: '一階', correct: '一回' },
+    // { incorrect: 'も止まった', correct: '求まった' },
+    // 動形詞だと"組み合わせ"、名詞だと"組合せ"が正しいらしい
+    // { incorrect: '組合せ|組合わせ', correct: '組み合わせ' },
 ];
