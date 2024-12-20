@@ -95,9 +95,46 @@ const report: TextlintRuleReporter = (context) => {
                     report(node, ruleError);
                 }
             });
+
+            // 一番上の部分の単位が[]になってるか
+            tables.forEach((table) => {
+                console.log(table);
+                const topRow = table[0];
+                const topRowUnitRegex = /^\[]\s?\\(math)?rm\{\s?[^\[]/;
+                const topRowUnitMatches = topRow.map((cell) => cell.match(topRowUnitRegex));
+                const missingUnits = topRowUnitMatches.filter((match) => !match);
+                if (missingUnits.length > 0) {
+                    const message = '表の見出しに単位が記載されていません';
+                    missingUnits.forEach((match, index) => {
+                        if (match) {
+                            const startIndex = fullText.indexOf(topRow[index]);
+                            const matchRange = [startIndex, startIndex + topRow[index].length] as const;
+                            const ruleError = new RuleError(message, {
+                                padding: locator.range(matchRange),
+                            });
+                            report(node, ruleError);
+                        }
+                    });
+                }
+            });
         },
     };
 };
+
+// tableの配列はこんな感じになっています
+// [
+//   [
+//     '\\begin{tabular}{ccccc}\n        \\hline \\hline\n        n',
+//     'a',
+//     'b',
+//     'c',
+//     'd'
+//   ],
+//   [ '\\hline\n        1', '97.79', '10.11', '1.29', '340.82' ],
+//   [ '2', '97.78', '10.113', '1.295', '340.82' ],
+//   [ '3', '97.79', '10.11', '1.294', '340.81' ],
+//   [ '\\hline \\hline\n    \\end{tabular}' ]
+// ]
 
 export default {
     linter: report,
