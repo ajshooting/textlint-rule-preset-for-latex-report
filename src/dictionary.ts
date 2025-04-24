@@ -29,6 +29,10 @@ export const dictionary: DictionaryEntry[] = [
     { incorrect: 'されいる', correct: 'されている' },
     { incorrect: 'ボルタ振り子', correct: 'ボルダ振り子' },
     { incorrect: '一階', correct: '一回' },
+    { incorrect: 'っっ', correct: 'っ' },
+    { incorrect: '実行値', correct: '実効値' },
+    // { incorrect: '発信', correct: '発振' },
+    // 機械と器械
     // { incorrect: 'も止まった', correct: '求まった' },
     // 動形詞だと"組み合わせ"、名詞だと"組合せ"が正しいらしい
     // { incorrect: '組合せ|組合わせ', correct: '組み合わせ' },
