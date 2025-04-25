@@ -1,5 +1,8 @@
 # textlint-rule-preset-for-latex-report
 
+[![npm version](https://badge.fury.io/js/textlint-rule-preset-for-latex-report.svg)](https://badge.fury.io/js/textlint-rule-preset-for-latex-report)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 大学の実験レポートの体裁をチェックする[textlint](https://github.com/textlint/textlint 'textlint')ルールプリセットです。  
 完全に自分用に作成しています。お好みで色々変更してください。
 
