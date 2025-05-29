@@ -31,6 +31,8 @@ export const dictionary: DictionaryEntry[] = [
     { incorrect: '一階', correct: '一回' },
     { incorrect: 'っっ', correct: 'っ' },
     { incorrect: '実行値', correct: '実効値' },
+    { incorrect: '制限波', correct: '正弦波' },
+    { incorrect: '移送', correct: '位相' },
     // { incorrect: '発信', correct: '発振' },
     // 機械と器械
     // { incorrect: 'も止まった', correct: '求まった' },
